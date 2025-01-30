@@ -19,7 +19,7 @@ read pswd
 
 mysql -u root << EOF
 CREATE DATABASE $user;
-GRANT ALL ON $db_name.* TO '$user'@'localhost' IDENTIFIED BY '$pswd' WITH GRANT OPTION;
+GRANT ALL ON ${db_name}.* TO '${user}'@'localhost' IDENTIFIED BY '${pswd}' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 EXIT;
 EOF
@@ -36,20 +36,21 @@ mv wordpress/ /var/www/html/
 #copy config.php
 cp -R /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
 
+#mengubah pada file config.php
+sed -i 's/wordpress_db/${db_name}/g' /var/www/html/wordpress/wp-config.php
+sed -i 's/wp_user/${user}/g' /var/www/html/wordpress/wp-config.php
+sed -i 's/DB_PASSWORD/${pswd}/g' /var/www/html/wordpress/wp-config.php
+
 #menambahkan owner
 chown -R www-data:www-data /var/www/html/wordpress/
-#mengubah pada file config.php
-sed -i 's/wordpress_db/$dbname/g' /var/www/html/wordpress/wp-config.php
-sed -i 's/wp_user/$user/g' /var/www/html/wordpress/wp-config.php
-sed -i 's/DB_PASSWORD/$pswd/g' /var/www/html/wordpress/wp-config.php
 
 #konfigurasi web-server
 echo "Nama domain kamu"
 read domain
-tee /etc/nginx/sites-available/$domain.conf << EOF > /dev/null
+tee /etc/nginx/sites-available/${domain}.conf << EOF > /dev/null
 server {
     listen 80;
-    server_name www.$domain $domain;
+    server_name www.${domain} ${domain};
 
     root /var/www/html/wordpress;
     index index.php index.html index.htm;
@@ -77,7 +78,7 @@ server {
 EOF
 
 #membuat symlink untul direktory lain
-ln -s /etc/nginx/sites-available/$domain.conf /etc/nginx/sites-enabled/
+ln -s /etc/nginx/sites-available/${domain}.conf /etc/nginx/sites-enabled/
 
 #reload nginx
 systemctl reload nginx.service
