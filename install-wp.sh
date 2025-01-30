@@ -21,7 +21,6 @@ mysql -u root << EOF
 CREATE DATABASE $user;
 GRANT ALL ON ${db_name}.* TO '${user}'@'localhost' IDENTIFIED BY '${pswd}' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
-EXIT;
 EOF
 
 #download wordpress
