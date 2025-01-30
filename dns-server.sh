@@ -44,4 +44,4 @@ systemctl restart named.service
 
 #mengganti nameserver
 sed -i "s/127.0.0.53/${ip}/g" /etc/resolv.conf
-sed -i "s/./${domain}/g" /etc/resolv.conf
+sed -i "s/nameserver .*/nameserver ${ip}/" /etc/resolv.conf
