@@ -13,7 +13,7 @@ cp -R /etc/bind/db.local /etc/bind/${domain}
 cp -R /etc/bind/db.127 /etc/bind/${domain}.reverse
 
 #edit file
-sed -i "s/localhost/${domain}/g"; "s/::1/${domain}." /etc/bind/${domain}
+sed -i "s/localhost/${domain}/g"; "s/::1/${domain}./g" /etc/bind/${domain}
 sed -i "14s/@/www.${domain}./g" /etc/bind/${domain}
 sed -i "s/127.0.0.1/${ip}/g" /etc/bind/${domain}
 
