@@ -21,7 +21,7 @@ sed -i "s/127.0.0.1/${ip}/g" /etc/bind/${domain}
 echo "Ip belakang anda"
 read ip2
 
-sed -n '13p' ${domain}.reverse >> /etc/bind/${domain}.reverse
+sed -n '13p' /etc/bind/${domain}.reverse >> /etc/bind/${domain}.reverse
 sed -i "s/localhost/${domain}/g" /etc/bind/${domain}.reverse
 sed -i "s/1.0.0/${ip2}/g" /etc/bind/${domain}.reverse
 
