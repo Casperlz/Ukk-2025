@@ -36,9 +36,9 @@ mv wordpress/ /var/www/html/
 cp -R /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
 
 #mengubah pada file config.php
-sed -i 's/wordpress_db/${db_name}/g' /var/www/html/wordpress/wp-config.php
-sed -i 's/wp_user/${user}/g' /var/www/html/wordpress/wp-config.php
-sed -i 's/DB_PASSWORD/${pswd}/g' /var/www/html/wordpress/wp-config.php
+sed -i 's/database_name_here/${db_name}/g' /var/www/html/wordpress/wp-config.php
+sed -i 's/username_here/${user}/g' /var/www/html/wordpress/wp-config.php
+sed -i 's/password_here/${pswd}/g' /var/www/html/wordpress/wp-config.php
 
 #menambahkan owner
 chown -R www-data:www-data /var/www/html/wordpress/
