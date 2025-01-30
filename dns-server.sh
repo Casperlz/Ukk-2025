@@ -13,16 +13,16 @@ cp -R /etc/bind/db.local /etc/bind/${domain}
 cp -R /etc/bind/db.127 /etc/bind/${domain}.reverse
 
 #edit file
-sed -i "s/localhost/${domain}/g"; "s/::1/${domain}." ${domain}
-sed -i "14s/@/www.${domain}./g" ${domain}
-sed -i "s/127.0.0.1/${ip}/g" ${domain}
+sed -i "s/localhost/${domain}/g"; "s/::1/${domain}." /etc/bind/${domain}
+sed -i "14s/@/www.${domain}./g" /etc/bind/${domain}
+sed -i "s/127.0.0.1/${ip}/g" /etc/bind/${domain}
 
 echo "Ip belakang anda"
 read ip2
 
-sed -n '13p' ${domain}.reverse >> ${domain}.reverse
-sed -i "s/localhost/${domain}/g" ${domain}.reverse
-sed -i "s/1.0.0/${ip2}/g" ${domain}.reverse
+sed -n '13p' ${domain}.reverse >> /etc/bind/${domain}.reverse
+sed -i "s/localhost/${domain}/g" /etc/bind/${domain}.reverse
+sed -i "s/1.0.0/${ip2}/g" /etc/bind/${domain}.reverse
 
 #edit file named.local
 tee /etc/bind/named.conf.local << EOF > /dev/null
