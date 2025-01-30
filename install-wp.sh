@@ -10,13 +10,16 @@ apt install mariadb-server mariadb-client -y
 apt install nginx -y
 
 #membuat database
-DB_NAME="wordpress_db"
-DB_USER="wp_user"
-DB_PASSWORD="password_kuat"
+echo "nama user"
+read user
+echo "nama database"
+read db_name
+echo "password"
+read pswd
 
 mysql -u root << EOF
-CREATE DATABASE ${DB_NAME};
-GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}' WITH GRANT OPTION;
+CREATE DATABASE $user;
+GRANT ALL ON $db_name.* TO '$user'@'localhost' IDENTIFIED BY '$pswd' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 EXIT;
 EOF
@@ -36,15 +39,17 @@ cp -R /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-co
 #menambahkan owner
 chown -R www-data:www-data /var/www/html/wordpress/
 #mengubah pada file config.php
-sed -i 's/wordpress_db/${DB_NAME}/g' /var/www/html/wordpress/wp-config.php
-sed -i 's/wp_user/${DB_USER}/g' /var/www/html/wordpress/wp-config.php
-sed -i 's/DB_PASSWORD/${DB_PASSWORD}/g' /var/www/html/wordpress/wp-config.php
+sed -i 's/wordpress_db/$dbname/g' /var/www/html/wordpress/wp-config.php
+sed -i 's/wp_user/$user/g' /var/www/html/wordpress/wp-config.php
+sed -i 's/DB_PASSWORD/$pswd/g' /var/www/html/wordpress/wp-config.php
 
 #konfigurasi web-server
-tee /etc/nginx/sites-available/domain.conf << EOF > /dev/null
+echo "Nama domain kamu"
+read domain
+tee /etc/nginx/sites-available/$domain.conf << EOF > /dev/null
 server {
     listen 80;
-    server_name www.ukk-namaKamu.net ukk-namaKamu.net;
+    server_name www.$domain $domain;
 
     root /var/www/html/wordpress;
     index index.php index.html index.htm;
@@ -72,7 +77,7 @@ server {
 EOF
 
 #membuat symlink untul direktory lain
-ln -s /etc/nginx/sites-available/ukk-randi.net.conf /etc/nginx/sites-enabled/
+ln -s /etc/nginx/sites-available/$domain.conf /etc/nginx/sites-enabled/
 
 #reload nginx
 systemctl reload nginx.service
