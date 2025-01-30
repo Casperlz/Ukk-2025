@@ -70,3 +70,9 @@ server {
     }
 }
 EOF
+
+#membuat symlink untul direktory lain
+ln -s /etc/nginx/sites-available/ukk-randi.net.conf /etc/nginx/sites-enabled/
+
+#reload nginx
+systemctl reload nginx.service
