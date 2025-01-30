@@ -17,6 +17,7 @@ sed -i "s/localhost/${domain}/g" /etc/bind/${domain}
 sed -i "s/::1/${domain}./g" /etc/bind/${domain}
 sed -i "14s/@/www.${domain}./g" /etc/bind/${domain}
 sed -i "s/127.0.0.1/${ip}/g" /etc/bind/${domain}
+sed -i "s/AAAA/CNAME/g" /etc/bind/${domain}
 
 echo "Ip belakang anda"
 read ip2
