@@ -20,6 +20,12 @@ read db_name
 echo "password"
 read pswd
 
+#memulai mysql
+systemctl start mysql
+
+#memulai Nginx
+systemctl start nginx
+
 mysql -u root << EOF
 CREATE DATABASE ${db_name};
 GRANT ALL ON ${db_name}.* TO '${user}'@'localhost' IDENTIFIED BY '${pswd}' WITH GRANT OPTION;
