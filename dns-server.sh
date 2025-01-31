@@ -25,7 +25,7 @@ read ip2
 sed -n '13p' /etc/bind/${domain}.reverse >> /etc/bind/${domain}.reverse
 sed -i "s/localhost/${domain}/g" /etc/bind/${domain}.reverse
 sed -i "s/1.0.0/${ip2}/g" /etc/bind/${domain}.reverse
-sed -i "s/${domain}/www.${domain}/g" /etc/bind/${domain}.reverse
+sed -i "14s/${domain}/www.${domain}/g" /etc/bind/${domain}.reverse
 
 #edit file named.local
 tee /etc/bind/named.conf.local << EOF > /dev/null
