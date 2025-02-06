@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#install web server
+apt install nginx -y
+
 #membuat database
 echo "nama user"
 read user
