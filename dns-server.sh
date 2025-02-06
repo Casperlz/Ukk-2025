@@ -2,6 +2,7 @@
 
 #update dan upgrade
 apt update && apt upgrade -y
+
 #install Bins9 sebagai DNS server
 apt install bind9 resolvconf dnsutils -y
 
@@ -10,6 +11,9 @@ apt install php8.3-cli php8.3-fpm php8.3-mysql php8.3-opcache php8.3-mbstring ph
 
 #install Database server
 apt install mariadb-server mariadb-client -y
+
+#install web server
+apt install nginx -y
 
 #copy file pada bind9
 echo "nama domain kamu"
