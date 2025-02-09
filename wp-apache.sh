@@ -36,7 +36,7 @@ sed -i "s/username_here/${user}/g" /var/www/html/wordpress/wp-config.php
 sed -i "s/password_here/${pswd}/g" /var/www/html/wordpress/wp-config.php
 
 #mengubah izin
-chown -R www-data /var/www/html/wordpress
+chown -R www-data:www-data /var/www/html/wordpress
 chmod 755 -R /var/www/html/wordpress
 
 #konfigurasi web server
@@ -54,8 +54,8 @@ tee /etc/apache2/sites-available/${domain}.conf << EOF > /dev/null
           Require all granted
      </Directory>
 
-     ErrorLog ${APACHE_LOG_DIR}/your-domain.com_error.log
-     CustomLog ${APACHE_LOG_DIR}/your-domain.com_access.log combined
+     ErrorLog ${APACHE_LOG_DIR}/${domain}_error.log
+     CustomLog ${APACHE_LOG_DIR}/${domain}_access.log combined
 
 </VirtualHost>
 EOF
@@ -64,10 +64,13 @@ EOF
 sudo a2enmod rewrite
 
 #mengaktifkan file konfigurasi
-sudo ln -s /etc/apache2/sites-available/wordpress.conf /etc/apache2/sites-enabled/
+sudo ln -s /etc/apache2/sites-available/${domain}.conf /etc/apache2/sites-enabled/
 
 #disable site
 a2dissite 000-default.conf
+
+#enable site
+a2ensite ${domain}.conf
 
 #restart apache2
 systemctl restart apache2
