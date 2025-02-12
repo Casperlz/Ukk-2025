@@ -20,24 +20,36 @@ echo "nama domain kamu"
 read domain
 echo "ip anda"
 read ip
+echo "domain proxmox"
+read domainpx
+echo "ip proxmox"
+read ippx
 
 cp -R /etc/bind/db.local /etc/bind/${domain}
 cp -R /etc/bind/db.127 /etc/bind/${domain}.reverse
 
 #edit file
+sed -n '13p' /etc/bind/${domain} >> /etc/bind/${domain}
 sed -i "s/localhost/${domain}/g" /etc/bind/${domain}
 sed -i "s/::1/${domain}./g" /etc/bind/${domain}
 sed -i "14s/@/www.${domain}./g" /etc/bind/${domain}
-sed -i "s/127.0.0.1/${ip}/g" /etc/bind/${domain}
+sed -i "13s/127.0.0.1/${ip}/g" /etc/bind/${domain}
 sed -i "s/AAAA/CNAME/g" /etc/bind/${domain}
+sed -i "15s/@/${domainpx}/g" /etc/bind/${domain}
+sed -i "15s/127.0.0.1/${ippx}/g" /etc/bind/${domain}
 
 echo "Ip belakang anda"
 read ip2
 
+echo "Ip proxmox belakang anda"
+read ip3
+
+sed -n '13p' /etc/bind/${domain}.reverse >> /etc/bind/${domain}.reverse
 sed -n '13p' /etc/bind/${domain}.reverse >> /etc/bind/${domain}.reverse
 sed -i "s/localhost/${domain}/g" /etc/bind/${domain}.reverse
 sed -i "s/1.0.0/${ip2}/g" /etc/bind/${domain}.reverse
 sed -i "14s/${domain}/www.${domain}/g" /etc/bind/${domain}.reverse
+sed -i "15s/${domain}/www.${domain}/g" /etc/bind/${domain}.reverse
 
 #edit file named.local
 tee /etc/bind/named.conf.local << EOF > /dev/null
