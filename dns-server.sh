@@ -47,9 +47,10 @@ read ip3
 sed -n '13p' /etc/bind/${domain}.reverse >> /etc/bind/${domain}.reverse
 sed -n '13p' /etc/bind/${domain}.reverse >> /etc/bind/${domain}.reverse
 sed -i "s/localhost/${domain}/g" /etc/bind/${domain}.reverse
-sed -i "s/1.0.0/${ip2}/g" /etc/bind/${domain}.reverse
+sed -i "s14/1.0.0/${ip2}/g" /etc/bind/${domain}.reverse
+sed -i "s15/1.0.0/${ip3}/g" /etc/bind/${domain}.reverse
 sed -i "14s/${domain}/www.${domain}/g" /etc/bind/${domain}.reverse
-sed -i "15s/${domain}/www.${domain}/g" /etc/bind/${domain}.reverse
+sed -i "15s/${domain}/${domainpx}/g" /etc/bind/${domain}.reverse
 
 #edit file named.local
 tee /etc/bind/named.conf.local << EOF > /dev/null
@@ -62,6 +63,10 @@ zone "${domain}" {
 zone "10.10.10.in-addr.arpa" {
         type master;
         file "/etc/bind/${domain}.reverse";
+};
+zone "${domainpx}" {
+        type master;
+        file "/etc/bind/${domain}";
 };
 EOF
 
